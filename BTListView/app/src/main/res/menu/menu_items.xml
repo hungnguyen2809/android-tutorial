@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Call Phone"
+        android:id="@+id/call"/>
+
+    <item
+        android:title="Send Message"
+        android:id="@+id/sendMessage"/>
+
+    <item
+        android:title="Update"
+        android:id="@+id/Update_Contact"/>
+
+    <item
+        android:title="Delete"
+        android:id="@+id/Delete_Contact"/>
+
+    <item
+        android:title="Sort by Ascending"
+        android:id="@+id/Sort_Ascending"/>
+
+    <item
+        android:title="Sort by Descending"
+        android:id="@+id/Sort_Descending"/>
+
+</menu>

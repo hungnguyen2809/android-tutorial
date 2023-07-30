@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QuanLySanPham</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="txt_forgot_password"><u>Quyên mật khẩu</u></string>
+    <string name="txt_register_account"><u>Đăng ký tài khoản</u></string>
+
+    <!--    Home Item Product-->
+    <string name="txt_home_item_product_edit"><u>Chỉnh sửa</u></string>
+    <string name="txt_home_item_product_delete"><u>Xóa</u></string>
+</resources>

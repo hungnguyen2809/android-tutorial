@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    tools:context=".LoginActivity">
+
+    <EditText
+        android:id="@+id/edtLoginUsername"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/custom_edittext"
+        android:hint="Tài khoản"
+        android:text="admin"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edtLoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_edittext"
+        android:hint="Mật khẩu"
+        android:inputType="textPassword"
+        android:text="admin"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custom_button"
+        android:text="Đăng nhập"
+        android:textColor="@color/white"
+        app:backgroundTint="@null" />
+
+    <TextView
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/txt_register_account"
+        android:textAlignment="center"
+        android:textColor="#3F51B5"
+        android:textSize="15sp"
+        android:textStyle="" />
+
+    <TextView
+        android:id="@+id/btnForgetPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/txt_forgot_password"
+        android:textAlignment="center"
+        android:textColor="#3F51B5"
+        android:textSize="13sp"
+        android:textStyle="" />
+</LinearLayout>

@@ -2,24 +2,19 @@ package com.hungnv28.quanlysanpham;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hungnv28.quanlysanpham.dao.UserDAO;
 import com.hungnv28.quanlysanpham.model.User;
-import com.hungnv28.quanlysanpham.utils.CommonUtils;
+import com.hungnv28.quanlysanpham.utils.Utils;
 
 public class RegisterActivity extends AppCompatActivity {
 
     UserDAO userDAO;
-    CommonUtils commonUtils;
 
     EditText edtUsername, edtPassword, edtFullName;
     Button btnRegister;
@@ -31,8 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         init();
         userDAO = new UserDAO(RegisterActivity.this);
-        commonUtils = new CommonUtils(RegisterActivity.this);
-        commonUtils.transparentStatusAndNavigation();
+        Utils.transparentStatusAndNavigation(this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

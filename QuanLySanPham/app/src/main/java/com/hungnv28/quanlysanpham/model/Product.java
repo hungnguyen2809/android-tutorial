@@ -6,22 +6,25 @@ public class Product {
     private String name;
     private long price;
     private int quantity;
+    private String imageUrl;
     private int categoryId;
 
-    public Product(int id, String code, String name, long price, int quantity, int categoryId) {
+    public Product(int id, String code, String name, long price, int quantity, String imageUrl, int categoryId) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
     }
 
-    public Product(String code, String name, long price, int quantity, int categoryId) {
+    public Product(String code, String name, long price, int quantity, String imageUrl, int categoryId) {
         this.code = code;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
     }
 
@@ -49,7 +52,7 @@ public class Product {
         this.name = name;
     }
 
-    public float getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -63,6 +66,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getCategoryId() {

@@ -1,12 +1,10 @@
 package com.hungnv28.quanlysanpham.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +31,7 @@ import com.hungnv28.quanlysanpham.dao.ProductCategoryDAO;
 import com.hungnv28.quanlysanpham.dao.ProductDAO;
 import com.hungnv28.quanlysanpham.model.Product;
 import com.hungnv28.quanlysanpham.model.ProductCategory;
+import com.hungnv28.quanlysanpham.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,8 @@ public class HomeFragment extends Fragment {
     private HomeProductAdapter adapter;
     private RecyclerView rcvProduct;
     private FloatingActionButton btnAddProduct;
+
+    private final int PERMISSION_CODE = 101;
 
 
     @Nullable
@@ -73,7 +76,20 @@ public class HomeFragment extends Fragment {
                 dialogInsertProduct();
             }
         });
+
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PERMISSION_CODE) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                openGallery();
+//            } else {
+//                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     private void dialogInsertProduct() {
         if (getContext() == null) return;
@@ -93,6 +109,7 @@ public class HomeFragment extends Fragment {
         EditText edtName = view.findViewById(R.id.edtProductModifyName);
         EditText edtPrice = view.findViewById(R.id.edtProductModifyPrice);
         EditText edtQuantity = view.findViewById(R.id.edtProductModifyQuantity);
+        ImageView ivImage = view.findViewById(R.id.ivProductModifyImage);
         Button btnCancel = view.findViewById(R.id.btnProductModifyCancel);
         Button btnSave = view.findViewById(R.id.btnProductModifySave);
 
@@ -118,6 +135,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() == null) return;
+                Utils.requestPermissionFragment(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE, new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        if (result) {
+                            openGallery();
+                        } else {
+                            Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,13 +160,13 @@ public class HomeFragment extends Fragment {
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
                 String code = edtCode.getText().toString();
                 String name = edtName.getText().toString();
                 String quantity = edtQuantity.getText().toString();
                 String price = edtPrice.getText().toString();
+//                String image = edtImage.getText().toString();
 
                 if (categoryIdSelected[0] == -1) {
                     Toast.makeText(getContext(), "Vui lòng chọn loại hàng hóa", Toast.LENGTH_SHORT).show();
@@ -155,7 +189,8 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-                Product product = new Product(code.toUpperCase(), name, Long.parseLong(price), Integer.parseInt(quantity), categoryIdSelected[0]);
+                Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
+                        Integer.parseInt(quantity), null, categoryIdSelected[0]);
                 boolean check = productDAO.insertProduct(product);
 
                 if (check) {
@@ -168,5 +203,9 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void openGallery() {
+
     }
 }

@@ -104,6 +104,19 @@
             android:inputType="number"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Hỉnh ảnh:" />
+
+        <ImageView
+            android:id="@+id/ivProductModifyImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_image_search" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

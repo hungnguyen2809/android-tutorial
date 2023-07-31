@@ -102,14 +102,8 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
     private void dialogDeleteProduct(Product product) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(false);
         builder.setMessage("Bạn có chắc muốn xóa " + product.getName() + " ?");
-        builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("Hủy bỏ", null);
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -157,6 +151,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         EditText edtName = view.findViewById(R.id.edtProductModifyName);
         EditText edtPrice = view.findViewById(R.id.edtProductModifyPrice);
         EditText edtQuantity = view.findViewById(R.id.edtProductModifyQuantity);
+//        EditText edtImage = view.findViewById(R.id.edtProductModifyImage);
         Button btnCancel = view.findViewById(R.id.btnProductModifyCancel);
         Button btnSave = view.findViewById(R.id.btnProductModifySave);
 
@@ -166,6 +161,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         edtName.setText(product.getName());
         edtPrice.setText(Utils.formatNumber2(product.getPrice()));
         edtQuantity.setText(Utils.formatNumber2(product.getQuantity()));
+//        edtImage.setText(product.getImageUrl());
 
         ArrayList<String> listCateName = new ArrayList<>();
         ArrayList<ProductCategory> categoryList = categoryDAO.getAll();
@@ -198,7 +194,6 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
                 String code = edtCode.getText().toString();
@@ -227,7 +222,8 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                     return;
                 }
 
-                Product productUpdate = new Product(product.getId(), code.toUpperCase(), name, Long.parseLong(price), Integer.parseInt(quantity), categoryIdSelected[0]);
+                Product productUpdate = new Product(product.getId(), code.toUpperCase(), name, Long.parseLong(price),
+                        Integer.parseInt(quantity), "", categoryIdSelected[0]);
                 boolean check = productDAO.updateProduct(productUpdate);
 
                 if (check) {

@@ -11,7 +11,7 @@ import com.hungnv28.quanlysanpham.model.Product;
 import java.util.ArrayList;
 
 public class ProductDAO {
-    private DbHelper helper;
+    private final DbHelper helper;
     private SQLiteDatabase db;
 
     public ProductDAO(Context context) {
@@ -30,9 +30,10 @@ public class ProductDAO {
             String name = cursor.getString(2);
             long price = cursor.getLong(3);
             int quantity = cursor.getInt(4);
-            int cateId = cursor.getInt(5);
+            String imageUrl = cursor.getString(5);
+            int cateId = cursor.getInt(6);
 
-            list.add(new Product(id, code, name, price, quantity, cateId));
+            list.add(new Product(id, code, name, price, quantity, imageUrl, cateId));
             cursor.moveToNext();
         }
         db.close();

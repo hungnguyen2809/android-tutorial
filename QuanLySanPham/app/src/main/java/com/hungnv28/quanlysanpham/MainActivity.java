@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -11,25 +12,27 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.hungnv28.quanlysanpham.fragment.FavoriteFragment;
 import com.hungnv28.quanlysanpham.fragment.HomeFragment;
 import com.hungnv28.quanlysanpham.fragment.ProductFragment;
 import com.hungnv28.quanlysanpham.fragment.SettingFragment;
+import com.hungnv28.quanlysanpham.model.User;
 import com.hungnv28.quanlysanpham.utils.CommonUtils;
+import com.hungnv28.quanlysanpham.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
-    CommonUtils commonUtils;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-
-    HomeFragment homeFragment;
-    ProductFragment productFragment;
-    FavoriteFragment favoriteFragment;
-    SettingFragment settingFragment;
+    private HomeFragment homeFragment;
+    private ProductFragment productFragment;
+    private FavoriteFragment favoriteFragment;
+    private SettingFragment settingFragment;
 
 
     @Override
@@ -38,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-        commonUtils = new CommonUtils(MainActivity.this);
-        commonUtils.setStatusBarColor(R.color.status_bar_home);
+        CommonUtils commonUtils = new CommonUtils(MainActivity.this);
+        Utils.setStatusBarColor(this, R.color.status_bar_home);
 
         setToolbar();
         setDrawerToggle();
@@ -80,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNavigationView() {
+        View viewHeader = navigationView.getHeaderView(0);
+        TextView txtFullName = viewHeader.findViewById(R.id.txtNavigationFullName);
+        TextView txtUserName = viewHeader.findViewById(R.id.txtNavigationUserName);
+
+        User userInfo = ((MainApplication) getApplication()).getUserInfo();
+        txtFullName.setText(userInfo.getFullName());
+        txtUserName.setText("#" + userInfo.getUsername());
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

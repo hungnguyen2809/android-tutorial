@@ -15,23 +15,24 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE IF NOT EXISTS USERS(" +
                 "USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "USER_NAME TEXT, " +
-                "PASS_WORD TEXT, " +
+                "USER_NAME TEXT NOT NULL, " +
+                "PASS_WORD TEXT NOT NULL, " +
                 "FULL_NAME TEXT)";
         db.execSQL(sql);
 
         sql = "CREATE TABLE IF NOT EXISTS PRODUCT_CATEGORIES(" +
                 "CATEGORY_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "CATEGORY_CODE TEXT, " +
-                "CATEGORY_NAME TEXT)";
+                "CATEGORY_CODE TEXT NOT NULL, " +
+                "CATEGORY_NAME TEXT NOT NULL)";
         db.execSQL(sql);
 
         sql = "CREATE TABLE IF NOT EXISTS PRODUCTS(" +
                 "PRODUCT_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "PRODUCT_CODE TEXT," +
-                "PRODUCT_NAME TEXT, " +
+                "PRODUCT_CODE TEXT NOT NULL," +
+                "PRODUCT_NAME TEXT NOT NULL, " +
                 "PRICE NUMBER, " +
                 "QUANTITY INTEGER, " +
+                "IMAGE_URL TEXT, " +
                 "CATEGORY_ID INTEGER REFERENCES PRODUCT_CATEGORIES(CATEGORY_ID))";
         db.execSQL(sql);
 
@@ -43,9 +44,9 @@ public class DbHelper extends SQLiteOpenHelper {
         sql = "INSERT INTO PRODUCT_CATEGORIES VALUES(2, 'KEO', 'Kẹo')";
         db.execSQL(sql);
 
-        sql = "INSERT INTO PRODUCTS VALUES(NULL, 'CHOCOLATE', 'Kẹo socola', 20000, 100, 2)";
+        sql = "INSERT INTO PRODUCTS VALUES(NULL, 'CHOCOLATE', 'Kẹo socola', 20000, 100, null, 2)";
         db.execSQL(sql);
-        sql = "INSERT INTO PRODUCTS VALUES(NULL, 'CHCOPIPE', 'Bánh Choco Pipe', 45000, 50, 1)";
+        sql = "INSERT INTO PRODUCTS VALUES(NULL, 'CHCOPIPE', 'Bánh Choco Pipe', 45000, 50, null, 1)";
         db.execSQL(sql);
     }
 

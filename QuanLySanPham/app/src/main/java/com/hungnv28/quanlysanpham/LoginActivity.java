@@ -7,12 +7,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,12 +18,11 @@ import android.widget.Toast;
 
 import com.hungnv28.quanlysanpham.dao.UserDAO;
 import com.hungnv28.quanlysanpham.model.User;
-import com.hungnv28.quanlysanpham.utils.CommonUtils;
+import com.hungnv28.quanlysanpham.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 
     UserDAO userDAO;
-    CommonUtils commonUtils;
 
     EditText edtUsername, edtPassword;
     Button btnLogin;
@@ -40,8 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
         userDAO = new UserDAO(LoginActivity.this);
-        commonUtils = new CommonUtils(LoginActivity.this);
-        commonUtils.transparentStatusAndNavigation();
+        Utils.transparentStatusAndNavigation(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +87,10 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Log.d("USER_INFO", user.toString());
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+            MainApplication application = (MainApplication) getApplication();
+            application.setUserInfo(user);
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -6,147 +6,153 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="6dp">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="15dp">
-
-        <TextView
-            android:id="@+id/txtProductModifyTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thêm sản phẩm"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Loại hàng hóa:" />
-
-        <Spinner
-            android:id="@+id/spinnerProductModifyCate"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_edittext"
-            android:hint="Chọn loại hàng hóa"
-            android:spinnerMode="dropdown"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Mã sản phẩm:" />
-
-        <EditText
-            android:id="@+id/edtProductModifyCode"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="name"
-            android:background="@drawable/custom_edittext"
-            android:hint="Nhập mã sản phẩm"
-            android:inputType="text"
-            android:textAllCaps="true"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Tên sản phẩm:" />
-
-        <EditText
-            android:id="@+id/edtProductModifyName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="name"
-            android:background="@drawable/custom_edittext"
-            android:hint="Nhập tên sản phẩm"
-            android:inputType="text"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Số lượng:" />
-
-        <EditText
-            android:id="@+id/edtProductModifyQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="name"
-            android:background="@drawable/custom_edittext"
-            android:hint="Nhập số lượng"
-            android:inputType="number"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Giá sản phẩm:" />
-
-        <EditText
-            android:id="@+id/edtProductModifyPrice"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="name"
-            android:background="@drawable/custom_edittext"
-            android:hint="Nhập giá sản phẩm"
-            android:inputType="number"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Hỉnh ảnh:" />
-
-        <ImageView
-            android:id="@+id/ivProductModifyImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_image_search" />
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="15dp">
 
-            <Button
-                android:id="@+id/btnProductModifyCancel"
+            <TextView
+                android:id="@+id/txtProductModifyTitle"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_button"
-                android:backgroundTint="#F8E0BC"
-                android:text="Hủy bỏ"
+                android:layout_height="wrap_content"
+                android:text="Thêm sản phẩm"
+                android:textAlignment="center"
+                android:textAllCaps="true"
                 android:textColor="@android:color/holo_orange_dark"
-                android:textSize="15sp"
-                app:backgroundTint="@null" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnProductModifySave"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Loại hàng hóa:" />
+
+            <Spinner
+                android:id="@+id/spinnerProductModifyCate"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_button"
-                android:text="Thêm mới"
-                android:textSize="15sp"
-                app:backgroundTint="@null" />
+                android:background="@drawable/custom_edittext"
+                android:hint="Chọn loại hàng hóa"
+                android:spinnerMode="dropdown"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Mã sản phẩm:" />
+
+            <EditText
+                android:id="@+id/edtProductModifyCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:background="@drawable/custom_edittext"
+                android:hint="Nhập mã sản phẩm"
+                android:inputType="text"
+                android:textAllCaps="true"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tên sản phẩm:" />
+
+            <EditText
+                android:id="@+id/edtProductModifyName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:background="@drawable/custom_edittext"
+                android:hint="Nhập tên sản phẩm"
+                android:inputType="text"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Số lượng:" />
+
+            <EditText
+                android:id="@+id/edtProductModifyQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:background="@drawable/custom_edittext"
+                android:hint="Nhập số lượng"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Giá sản phẩm:" />
+
+            <EditText
+                android:id="@+id/edtProductModifyPrice"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:background="@drawable/custom_edittext"
+                android:hint="Nhập giá sản phẩm"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Hỉnh ảnh:" />
+
+            <ImageView
+                android:id="@+id/ivProductModifyImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_image_search" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnProductModifyCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="#F8E0BC"
+                    android:text="Hủy bỏ"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="15sp"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnProductModifySave"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:text="Thêm mới"
+                    android:textSize="15sp"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.cardview.widget.CardView>

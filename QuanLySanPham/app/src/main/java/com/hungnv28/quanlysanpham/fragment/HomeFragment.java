@@ -1,10 +1,14 @@
 package com.hungnv28.quanlysanpham.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,8 +38,11 @@ import com.hungnv28.quanlysanpham.dao.ProductCategoryDAO;
 import com.hungnv28.quanlysanpham.dao.ProductDAO;
 import com.hungnv28.quanlysanpham.model.Product;
 import com.hungnv28.quanlysanpham.model.ProductCategory;
+import com.hungnv28.quanlysanpham.utils.CloudinaryUtils;
+import com.hungnv28.quanlysanpham.utils.ProgressLoading;
 import com.hungnv28.quanlysanpham.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -43,8 +53,10 @@ public class HomeFragment extends Fragment {
     private HomeProductAdapter adapter;
     private RecyclerView rcvProduct;
     private FloatingActionButton btnAddProduct;
+    private ImageView ivImageProduct;
 
     private final int PERMISSION_CODE = 101;
+    private String filePathImage = "";
 
 
     @Nullable
@@ -60,6 +72,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        CloudinaryUtils.init(getActivity());
+
         productDAO = new ProductDAO(getContext());
         categoryDAO = new ProductCategoryDAO(getContext());
 
@@ -79,18 +93,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == PERMISSION_CODE) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                openGallery();
-//            } else {
-//                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-
     private void dialogInsertProduct() {
         if (getContext() == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -109,9 +111,9 @@ public class HomeFragment extends Fragment {
         EditText edtName = view.findViewById(R.id.edtProductModifyName);
         EditText edtPrice = view.findViewById(R.id.edtProductModifyPrice);
         EditText edtQuantity = view.findViewById(R.id.edtProductModifyQuantity);
-        ImageView ivImage = view.findViewById(R.id.ivProductModifyImage);
         Button btnCancel = view.findViewById(R.id.btnProductModifyCancel);
         Button btnSave = view.findViewById(R.id.btnProductModifySave);
+        ivImageProduct = view.findViewById(R.id.ivProductModifyImage);
 
         ArrayList<String> listCateName = new ArrayList<>();
         ArrayList<ProductCategory> categoryList = categoryDAO.getAll();
@@ -135,20 +137,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        ivImage.setOnClickListener(new View.OnClickListener() {
+        ivImageProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() == null) return;
-                Utils.requestPermissionFragment(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE, new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
-                        if (result) {
-                            openGallery();
-                        } else {
-                            Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                boolean check = Utils.requestPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE, PERMISSION_CODE);
+                if (check) {
+                    openGallery();
+                }
             }
         });
 
@@ -166,7 +162,6 @@ public class HomeFragment extends Fragment {
                 String name = edtName.getText().toString();
                 String quantity = edtQuantity.getText().toString();
                 String price = edtPrice.getText().toString();
-//                String image = edtImage.getText().toString();
 
                 if (categoryIdSelected[0] == -1) {
                     Toast.makeText(getContext(), "Vui lòng chọn loại hàng hóa", Toast.LENGTH_SHORT).show();
@@ -189,23 +184,65 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-                Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
-                        Integer.parseInt(quantity), null, categoryIdSelected[0]);
-                boolean check = productDAO.insertProduct(product);
+                CloudinaryUtils.upload(getActivity(), filePathImage, new CloudinaryUtils.UploadCallbackCloudinary() {
+                    @Override
+                    public void onStart(String requestId) {
+                        ProgressLoading.show(getActivity());
+                    }
 
-                if (check) {
-                    Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                    listProduct = productDAO.getAll();
-                    adapter.setNotifyDataChanged(listProduct);
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    public void onError(String requestId, String error) {
+                        ProgressLoading.hide(getActivity());
+                        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String requestId, String url) {
+                        Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
+                                Integer.parseInt(quantity), url, categoryIdSelected[0]);
+                        boolean check = productDAO.insertProduct(product);
+                        ProgressLoading.hide(getActivity());
+
+                        if (check) {
+                            Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                            listProduct = productDAO.getAll();
+                            adapter.setNotifyDataChanged(listProduct);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
             }
         });
     }
 
     private void openGallery() {
-
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        resultGalleryLauncher.launch(intent);
     }
+
+
+    private final ActivityResultLauncher<Intent> resultGalleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getData() == null || getActivity() == null) return;
+
+                    filePathImage = Utils.getRealPathUri(result.getData().getData(), getActivity());
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), result.getData().getData());
+                            ivImageProduct.setImageBitmap(bitmap);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            });
 }

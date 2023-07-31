@@ -2,8 +2,11 @@ package com.hungnv28.quanlysanpham.utils;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -86,5 +89,16 @@ public class Utils {
                 new ActivityResultContracts.RequestPermission(), callback
         );
         launcher.launch(manifest);
+    }
+
+    public static String getRealPathUri(Uri uri, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) {
+            return uri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(index);
+        }
     }
 }

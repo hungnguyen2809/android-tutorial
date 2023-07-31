@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hungnv28.quanlysanpham.R;
 import com.hungnv28.quanlysanpham.dao.ProductCategoryDAO;
 import com.hungnv28.quanlysanpham.dao.ProductDAO;
@@ -35,6 +37,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     private ArrayList<Product> data;
     private final ProductDAO productDAO;
     private final ProductCategoryDAO categoryDAO;
+    private ImageView ivImageProduct;
 
     public HomeProductAdapter(Context context, ArrayList<Product> data) {
         this.context = context;
@@ -64,6 +67,10 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.txtPrice.setText(Utils.formatNumber(product.getPrice()) + " VNĐ");
         holder.txtQuantity.setText("SL: " + Utils.formatNumber(product.getQuantity()));
 
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            Glide.with(context).load(product.getImageUrl()).into(holder.ivImageProduct);
+        }
+
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +94,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txtName, txtPrice, txtQuantity, btnEdit, btnDelete;
+        public ImageView ivImageProduct;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -97,6 +105,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
             txtQuantity = itemView.findViewById(R.id.txtHomeItemQuantityProduct);
             btnEdit = itemView.findViewById(R.id.btnHomeItemProductEdit);
             btnDelete = itemView.findViewById(R.id.btnHomeItemProductDel);
+            ivImageProduct = itemView.findViewById(R.id.ivHomeItemImageProduct);
         }
     }
 
@@ -151,9 +160,9 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         EditText edtName = view.findViewById(R.id.edtProductModifyName);
         EditText edtPrice = view.findViewById(R.id.edtProductModifyPrice);
         EditText edtQuantity = view.findViewById(R.id.edtProductModifyQuantity);
-//        EditText edtImage = view.findViewById(R.id.edtProductModifyImage);
         Button btnCancel = view.findViewById(R.id.btnProductModifyCancel);
         Button btnSave = view.findViewById(R.id.btnProductModifySave);
+        ivImageProduct = view.findViewById(R.id.ivProductModifyImage);
 
         txtTitle.setText("Cập nhật sản phẩm");
         btnSave.setText("Cập nhật");
@@ -161,7 +170,6 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         edtName.setText(product.getName());
         edtPrice.setText(Utils.formatNumber2(product.getPrice()));
         edtQuantity.setText(Utils.formatNumber2(product.getQuantity()));
-//        edtImage.setText(product.getImageUrl());
 
         ArrayList<String> listCateName = new ArrayList<>();
         ArrayList<ProductCategory> categoryList = categoryDAO.getAll();

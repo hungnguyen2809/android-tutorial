@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -21,7 +20,6 @@ import com.hungnv28.quanlysanpham.fragment.HomeFragment;
 import com.hungnv28.quanlysanpham.fragment.ProductFragment;
 import com.hungnv28.quanlysanpham.fragment.SettingFragment;
 import com.hungnv28.quanlysanpham.model.User;
-import com.hungnv28.quanlysanpham.utils.CommonUtils;
 import com.hungnv28.quanlysanpham.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,13 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-        CommonUtils commonUtils = new CommonUtils(MainActivity.this);
-        Utils.setStatusBarColor(this, R.color.status_bar_home);
-
         setToolbar();
         setDrawerToggle();
         setNavigationView();
-
+        Utils.setStatusBarColor(this, R.color.status_bar_home);
     }
 
     private void init() {

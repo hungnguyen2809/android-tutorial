@@ -1,5 +1,7 @@
 package com.hungnv28.quanlysanpham.model;
 
+import androidx.annotation.Nullable;
+
 public class Product {
     private int id;
     private String code;
@@ -68,6 +70,7 @@ public class Product {
         this.quantity = quantity;
     }
 
+    @Nullable
     public String getImageUrl() {
         return imageUrl;
     }

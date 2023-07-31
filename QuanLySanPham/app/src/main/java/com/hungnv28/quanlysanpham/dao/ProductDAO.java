@@ -47,6 +47,7 @@ public class ProductDAO {
         values.put("PRODUCT_NAME", product.getName());
         values.put("PRICE", product.getPrice());
         values.put("QUANTITY", product.getQuantity());
+        values.put("IMAGE_URL", product.getImageUrl());
         values.put("CATEGORY_ID", product.getCategoryId());
         long row = db.insert("PRODUCTS", null, values);
 
@@ -61,6 +62,7 @@ public class ProductDAO {
         values.put("PRODUCT_NAME", product.getName());
         values.put("PRICE", product.getPrice());
         values.put("QUANTITY", product.getQuantity());
+        values.put("IMAGE_URL", product.getImageUrl());
         values.put("CATEGORY_ID", product.getCategoryId());
         int row = db.update("PRODUCTS", values, "PRODUCT_ID = ?", new String[]{String.valueOf(product.getId())});
 

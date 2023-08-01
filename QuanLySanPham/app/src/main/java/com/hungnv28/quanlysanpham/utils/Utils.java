@@ -10,15 +10,12 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -36,7 +33,14 @@ public class Utils {
         return numberFormatter.format(number);
     }
 
-    public static void setStatusBarColor(Activity activity, @ColorRes int id) {
+    public static void dismissKeyboard(@NonNull Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm.isAcceptingText() && activity.getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    public static void setStatusBarColor(@NonNull Activity activity, @ColorRes int id) {
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -63,7 +67,7 @@ public class Utils {
         }
     }
 
-    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+    public static void setWindowFlag(@NonNull Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         if (on) {
@@ -83,15 +87,7 @@ public class Utils {
         }
     }
 
-    public static void requestPermissionFragment(FragmentActivity fragmentActivity, String manifest,
-                                                 ActivityResultCallback<Boolean> callback) {
-        ActivityResultLauncher<String> launcher = fragmentActivity.registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(), callback
-        );
-        launcher.launch(manifest);
-    }
-
-    public static String getRealPathUri(Uri uri, Activity activity) {
+    public static String getRealPathUri(Uri uri, @NonNull Activity activity) {
         Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
         if (cursor == null) {
             return uri.getPath();

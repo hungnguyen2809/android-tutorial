@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment {
         Button btnCancel = view.findViewById(R.id.btnProductModifyCancel);
         Button btnSave = view.findViewById(R.id.btnProductModifySave);
         ivImageProduct = view.findViewById(R.id.ivProductModifyImage);
+        filePathImage = "";
 
         ArrayList<String> listCateName = new ArrayList<>();
         ArrayList<ProductCategory> categoryList = categoryDAO.getAll();
@@ -184,37 +185,50 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-                CloudinaryUtils.upload(getActivity(), filePathImage, new CloudinaryUtils.UploadCallbackCloudinary() {
-                    @Override
-                    public void onStart(String requestId) {
-                        ProgressLoading.show(getActivity());
-                    }
-
-                    @Override
-                    public void onError(String requestId, String error) {
-                        ProgressLoading.hide(getActivity());
-                        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onSuccess(String requestId, String url) {
-                        Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
-                                Integer.parseInt(quantity), url, categoryIdSelected[0]);
-                        boolean check = productDAO.insertProduct(product);
-                        ProgressLoading.hide(getActivity());
-
-                        if (check) {
-                            Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                            listProduct = productDAO.getAll();
-                            adapter.setNotifyDataChanged(listProduct);
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                if (filePathImage != null) {
+                    CloudinaryUtils.upload(getActivity(), filePathImage, new CloudinaryUtils.UploadCallbackCloudinary() {
+                        @Override
+                        public void onStart(String requestId) {
+                            ProgressLoading.show(getActivity());
                         }
+
+                        @Override
+                        public void onError(String requestId, String error) {
+                            ProgressLoading.hide(getActivity());
+                            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onSuccess(String requestId, String url) {
+                            ProgressLoading.hide(getActivity());
+                            Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
+                                    Integer.parseInt(quantity), url, categoryIdSelected[0]);
+                            boolean check = productDAO.insertProduct(product);
+
+                            if (check) {
+                                Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                                listProduct = productDAO.getAll();
+                                adapter.setNotifyDataChanged(listProduct);
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    Product product = new Product(code.toUpperCase(), name, Long.parseLong(price),
+                            Integer.parseInt(quantity), null, categoryIdSelected[0]);
+                    boolean check = productDAO.insertProduct(product);
+
+                    if (check) {
+                        Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                        listProduct = productDAO.getAll();
+                        adapter.setNotifyDataChanged(listProduct);
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
                     }
-                });
-
-
+                }
             }
         });
     }

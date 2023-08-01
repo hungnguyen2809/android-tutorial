@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">QuanLySanPham</string>
+
+    <string name="CloudinaryName">hungnguyen2809</string>
+    <string name="CloudinaryApiKey">876575444377316</string>
+    <string name="CloudinaryApiSecret">kLfV9lEgG_WmTiyfVZ1WHp2apYA</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="txt_forgot_password"><u>Quyên mật khẩu</u></string>

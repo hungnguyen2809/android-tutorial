@@ -1,11 +1,13 @@
 package com.hungnv28.quanlysanpham.adapter;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +40,11 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     private final ProductDAO productDAO;
     private final ProductCategoryDAO categoryDAO;
     private ImageView ivImageProduct;
+    private String filePatchImage = "";
 
     public HomeProductAdapter(Context context, ArrayList<Product> data) {
-        this.context = context;
         this.data = data;
+        this.context = context;
         this.productDAO = new ProductDAO(context);
         this.categoryDAO = new ProductCategoryDAO(context);
     }
@@ -142,7 +145,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         return id;
     }
 
-    private void dialogUpdateProduct(Product product) {
+    private void dialogUpdateProduct(final Product product) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.dialog_modify_product, null, false);
@@ -171,6 +174,11 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         edtPrice.setText(Utils.formatNumber2(product.getPrice()));
         edtQuantity.setText(Utils.formatNumber2(product.getQuantity()));
 
+        filePatchImage = "";
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            Glide.with(context).load(product.getImageUrl()).into(ivImageProduct);
+        }
+
         ArrayList<String> listCateName = new ArrayList<>();
         ArrayList<ProductCategory> categoryList = categoryDAO.getAll();
         for (ProductCategory cate : categoryList) {
@@ -191,6 +199,16 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        ivImageProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean check = Utils.requestPermission((Activity) context, android.Manifest.permission.READ_EXTERNAL_STORAGE, 1);
+                if (check) {
+                    openGallery();
+                }
             }
         });
 
@@ -231,7 +249,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                 }
 
                 Product productUpdate = new Product(product.getId(), code.toUpperCase(), name, Long.parseLong(price),
-                        Integer.parseInt(quantity), "", categoryIdSelected[0]);
+                        Integer.parseInt(quantity), product.getImageUrl(), categoryIdSelected[0]);
                 boolean check = productDAO.updateProduct(productUpdate);
 
                 if (check) {
@@ -245,5 +263,12 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                 }
             }
         });
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//        resultGalleryLauncher.launch(intent);
     }
 }

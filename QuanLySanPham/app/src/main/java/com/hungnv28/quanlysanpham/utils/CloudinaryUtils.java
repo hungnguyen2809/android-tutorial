@@ -3,9 +3,12 @@ package com.hungnv28.quanlysanpham.utils;
 import android.app.Activity;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
+import com.hungnv28.quanlysanpham.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +17,10 @@ import java.util.Objects;
 public class CloudinaryUtils {
     private static final HashMap<String, String> config = new HashMap<>();
 
-    public static void init(Activity activity) {
-        config.put("cloud_name", "hungnguyen2809");
-        config.put("api_key", "876575444377316");
-        config.put("api_secret", "kLfV9lEgG_WmTiyfVZ1WHp2apYA");
+    public static void init(@NonNull Activity activity) {
+        config.put("cloud_name", activity.getResources().getString(R.string.CloudinaryName));
+        config.put("api_key", activity.getResources().getString(R.string.CloudinaryApiKey));
+        config.put("api_secret", activity.getResources().getString(R.string.CloudinaryApiSecret));
         MediaManager.init(activity, config);
     }
 

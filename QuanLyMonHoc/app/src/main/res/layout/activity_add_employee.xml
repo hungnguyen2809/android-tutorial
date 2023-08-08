@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="10dp"
+    tools:context=".activity.AddEmployeeActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Thêm nhân viên"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Mã nhân viên:"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edtCodeDepAdd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="name"
+        android:background="@drawable/edit_text_custom"
+        android:hint="Nhập mã nhân viên"
+        android:paddingHorizontal="15dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Tên nhân viên:"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edtNameDepAdd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="name"
+        android:background="@drawable/edit_text_custom"
+        android:hint="Nhập tên nhân viên"
+        android:paddingHorizontal="15dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Phòng ban:"
+        android:textSize="15sp" />
+
+    <Spinner
+        android:id="@+id/spnDepAdd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddEmpAdd"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:text="Thêm"
+        app:cornerRadius="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCancelEmpAdd"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/secondary"
+        android:text="Hủy"
+        android:textColor="@color/primary"
+        app:cornerRadius="10dp"
+        app:strokeColor="@color/variant"
+        app:strokeWidth="1dp" />
+
+</LinearLayout>

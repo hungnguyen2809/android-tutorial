@@ -1,23 +1,23 @@
 package com.hungnv28.quanlymonhoc.model;
 
 public class Employee {
-    private int id;
+    private long id;
     private String code;
     private String name;
     private String nameDep;
 
-    public Employee(int id, String code, String name, String nameDep) {
+    public Employee(long id, String code, String name, String nameDep) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.nameDep = nameDep;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

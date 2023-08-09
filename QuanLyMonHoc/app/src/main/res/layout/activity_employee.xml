@@ -5,19 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingVertical="10dp"
     tools:context=".activity.EmployeeActivity">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddEmployee"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:background="@drawable/button_custom_gradient"
-        android:text="Thêm nhân viên"
-        android:textAllCaps="true"
-        android:textSize="15sp"
-        app:backgroundTint="@null" />
+        android:background="@color/primary" />
+
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/btnAddEmployee"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="16dp"-->
+    <!--        android:background="@drawable/button_custom_gradient"-->
+    <!--        android:text="Thêm nhân viên"-->
+    <!--        android:textAllCaps="true"-->
+    <!--        android:textSize="15sp"-->
+    <!--        app:backgroundTint="@null" />-->
 
     <ListView
         android:id="@+id/lvEmployee"

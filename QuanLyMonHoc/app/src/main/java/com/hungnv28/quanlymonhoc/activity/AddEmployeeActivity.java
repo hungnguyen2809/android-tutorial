@@ -77,6 +77,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
 
                 setResult(1001, intent);
+                finish();
             }
         });
     }

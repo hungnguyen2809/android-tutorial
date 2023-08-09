@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="30dp"
-        android:text="Thêm"
+        android:text="Lưu lại"
         app:cornerRadius="10dp" />
 
     <com.google.android.material.button.MaterialButton

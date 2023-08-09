@@ -65,7 +65,7 @@ public class EmployeeActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) return;
 
-        actionBar.setTitle(null);
+        actionBar.setTitle("Danh sách nhân viên");
     }
 
     @Override

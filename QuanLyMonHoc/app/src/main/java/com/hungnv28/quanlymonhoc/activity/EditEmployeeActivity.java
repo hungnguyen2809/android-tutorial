@@ -57,7 +57,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
 
         ArrayList<Department> departmentList = DepartmentActivity.getListDepartment();
         int index = -1;
-        for (int i = 0; i <= departmentList.size(); i++) {
+        for (int i = 0; i < departmentList.size(); i++) {
             if (Objects.equals(departmentList.get(i).getName(), employeeRoot.getName())) {
                 index = i;
                 break;
@@ -106,6 +106,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
 
                 setResult(1002, intent);
+                finish();
             }
         });
     }

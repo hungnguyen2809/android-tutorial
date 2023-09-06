@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hungnv28.androidfirebase.databinding.ActivityLoginBinding;
+import com.hungnv28.androidfirebase.models.Person;
 
 import java.util.Objects;
 
@@ -124,13 +125,21 @@ public class LoginActivity extends AppCompatActivity {
                         binding.edtUsername.setError(null);
                         String passFormDb = snapshot.child(user).child("password").getValue(String.class);
 
-                        if (!Objects.equals(passFormDb, pass)) {
+                        if (!pass.equals(passFormDb)) {
                             binding.edtPassword.setError("Password is wrong");
                             binding.edtPassword.requestFocus();
                             return;
                         }
 
+                        String fullNameFormDb = snapshot.child(user).child("fullName").getValue(String.class);
+                        String emailFormDb = snapshot.child(user).child("email").getValue(String.class);
+
+                        Person person = new Person(fullNameFormDb, emailFormDb, user, pass);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putSerializable("data", person);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
 

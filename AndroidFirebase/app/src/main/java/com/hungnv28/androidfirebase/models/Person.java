@@ -1,6 +1,8 @@
 package com.hungnv28.androidfirebase.models;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private String fullName;
     private String email;
     private String username;

@@ -34,7 +34,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edtEmail"
+                android:id="@+id/edtFullName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
@@ -42,9 +42,36 @@
                 android:drawableStart="@drawable/ic_person_24"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/primary"
+                android:hint="Full Name"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableStart="@drawable/ic_email_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/primary"
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableStart="@drawable/ic_person_pin_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/primary"
+                android:hint="Username"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
 
             <EditText
                 android:id="@+id/edtPassword"
